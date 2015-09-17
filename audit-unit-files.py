@@ -54,6 +54,8 @@ class IniChecker(object):
                     has_errors = True
                     continue
 
+            LOG.info('file %s is okay', path)
+
         return not has_errors
 
 
@@ -64,13 +66,23 @@ def parse_args():
                    default=[])
     p.add_argument('--all', '-a',
                    action='store_true')
+    p.add_argument('--debug', '-d',
+                   action='store_const',
+                   const='DEBUG',
+                   dest='loglevel')
+    p.add_argument('--verbose', '-v',
+                   action='store_const',
+                   const='INFO',
+                   dest='loglevel')
     p.add_argument('files', nargs='*')
+
+    p.set_defaults(loglevel='WARN')
     return p.parse_args()
 
 
 def main():
     args = parse_args()
-    logging.basicConfig()
+    logging.basicConfig(level=args.loglevel)
 
     checker = IniChecker()
 

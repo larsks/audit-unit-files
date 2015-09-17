@@ -1,0 +1,10 @@
+[Unit]
+Description=__exists__
+After=syslog.target network.target
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
